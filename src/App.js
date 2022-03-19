@@ -1,9 +1,10 @@
 import Home from "./components/Home";
-import Header from "./components/Header";
+import Header from "./components/pages/Header";
+import "./index.css"
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Header/>
       <Home/>
     </div>

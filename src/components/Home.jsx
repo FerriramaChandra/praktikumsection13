@@ -1,8 +1,8 @@
 import { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
-import ListTodo from "./ListTodo";
-import styles from "./styles.module.css";
-import TodoInput from "./TodoInput";
+
+import ListTodo from "./pages/ListTodo";
+import TodoInput from "./pages/TodoInput";
+
 
 
 class Home extends Component {
@@ -11,14 +11,14 @@ class Home extends Component {
         this.state = {
             data : [
                 {
-                    id: uuidv4(),
+                    id: 1,
                     title: "Mengerjakan exercise",
                     completed: true
                 },
                 {
-                    id: uuidv4(),
+                    id: 2,
                     title: "Mengerjakan Assignment",
-                    completed: true
+                    completed: false
                 },
             ]
         }
@@ -29,28 +29,24 @@ class Home extends Component {
         this.setState({data : newListTodo})
     }
     addTodo = (newTodo) => {
-        const newTugas = {id : uuidv4(), ... newTodo}
+        const newTugas = {id : this.state.data.length + 1, ... newTodo}
         this.setState({data: [...this.state.data, newTugas]})
     }
-
-
-    handleBukaInput = () => {
-        this.setState ({
-            editing:false
+    handleCheckBoxChange = (id) => {
+        const newList = this.state.data.map(data=> {
+            if (data.id === id)
+            return { ...data,completed:!data.completed }
+        return data;
         })
+        this.setState({data:newList})
     }
-    handleTutupInput = () => {
-        this.setState ({
-            editing:true
-        })
-    }
-
 
     render() {
+
         return (
-            <div className={styles.Home}>
-                <ListTodo data={this.state.data} deleteTodo={this.deleteTodo}/>
-                <TodoInput/>
+            <div>
+                <TodoInput addTodo = {this.addTodo}/>
+                <ListTodo data={this.state.data} deleteTodo={this.deleteTodo} handleCheckBoxChange={this.handleCheckBoxChange} />
             </div>
         )
     }
